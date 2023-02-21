@@ -29,3 +29,13 @@ Follow the steps:
 - git clone
 - npm i
 - ng serve
+
+## Task 2: Serve SPA in AWS S3 and Cloudfront Services
+
+### Deploy to Cloudfront
+
+- npm run cloudfront:update:build:deploy:nc
+
+[S3_website URL](http://jas1337-shop-angular-cloudfront.s3-website-eu-west-1.amazonaws.com/)
+
+[cloudfront URL](https://d25fwvg9qrlnyv.cloudfront.net/)
