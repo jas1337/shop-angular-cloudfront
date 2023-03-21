@@ -56,7 +56,6 @@ export class ProductsService extends ApiService {
   }
 
   getProducts(): Observable<Product[]> {
-    console.log(!this.endpointEnabled("product"));
     if (!this.endpointEnabled('product')) {
       console.warn(
         'Endpoint "product" is disabled. To enable change your environment.ts config'
