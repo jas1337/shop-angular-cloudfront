@@ -8,6 +8,7 @@ export const environment: Config = {
     import: 'https://rfs2hfd6uj.execute-api.eu-west-1.amazonaws.com/prod',
     bff: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
     cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+    auth: 'https://iwox2g5nfl.execute-api.eu-west-1.amazonaws.com/prod',
   },
   apiEndpointsEnabled: {
     product: true,
@@ -15,5 +16,6 @@ export const environment: Config = {
     import: true,
     bff: false,
     cart: false,
+    auth: true,
   },
 };
