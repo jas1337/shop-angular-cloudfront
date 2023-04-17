@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { OrdersComponent } from './orders/orders.component';
 import { ManageProductsComponent } from './manage-products/manage-products.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: AuthComponent,
+  },
   {
     path: 'orders',
     component: OrdersComponent,

@@ -10,6 +10,8 @@ import { ProductCheckout } from '../products/product.interface';
 import { Observable } from 'rxjs';
 import { CartService } from './cart.service';
 import { map, shareReplay } from 'rxjs/operators';
+import { OrdersService } from '../admin/orders/orders.service';
+import { OrderStatus } from '../admin/orders/order.interface';
 
 @Component({
   selector: 'app-cart',
@@ -33,6 +35,7 @@ export class CartComponent implements OnInit {
   constructor(
     private readonly fb: UntypedFormBuilder,
     private readonly checkoutService: CheckoutService,
+    private readonly orderService: OrdersService,
     private readonly cartService: CartService
   ) {}
 
@@ -85,5 +88,30 @@ export class CartComponent implements OnInit {
 
   remove(id: string): void {
     this.cartService.removeItem(id);
+  }
+
+  async createOrder() {
+    this.products$.subscribe((items) => {
+      const { firstName, lastName, address, comment } = this.shippingInfo.value;
+
+      return this.orderService
+        .createOrder({
+          address: {
+            comment,
+            address,
+            firstName,
+            lastName,
+          },
+          items,
+          statusHistory: [
+            {
+              status: OrderStatus.open,
+              timestamp: Date.now().toString(),
+              comment: 'Order created',
+            },
+          ],
+        })
+        .subscribe();
+    });
   }
 }

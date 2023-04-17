@@ -21,6 +21,12 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <a routerLink="admin/orders" mat-menu-item>Manage orders</a>
-  <a routerLink="admin/products" mat-menu-item>Manage products</a>
+  <a *ngIf="!isAuthenticated" routerLink="admin/login" mat-menu-item>Log in</a>
+  <a *ngIf="isAuthenticated" routerLink="admin/orders" mat-menu-item
+    >Manage orders</a
+  >
+  <a *ngIf="isAuthenticated" routerLink="admin/products" mat-menu-item
+    >Manage products</a
+  >
+  <a *ngIf="isAuthenticated" (click)="logOut()" mat-menu-item>Log out</a>
 </mat-menu>
