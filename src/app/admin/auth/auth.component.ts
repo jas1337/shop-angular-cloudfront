@@ -55,7 +55,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.cartService.getCart();
       this.notificationService.showError(
         `You were logged in as: ${username}`,
-        1000
+        2000
       );
     });
   }

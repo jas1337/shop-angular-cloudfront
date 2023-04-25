@@ -32,6 +32,6 @@ export class HeaderComponent implements OnInit {
   logOut() {
     this.cartService.empty();
     this.authService.logOut();
-    this.notificationService.showError('You were logged out', 1000);
+    this.notificationService.showError('You were logged out', 2000);
   }
 }
