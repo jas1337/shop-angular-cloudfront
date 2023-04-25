@@ -6,7 +6,9 @@
         <mat-form-field class="w-100">
           <mat-label>Login</mat-label>
           <input matInput formControlName="username" />
-          <mat-error *ngIf="usernameCtrl.touched && usernameCtrl.hasError('required')">
+          <mat-error
+            *ngIf="usernameCtrl.touched && usernameCtrl.hasError('required')"
+          >
             Login is missing
           </mat-error>
         </mat-form-field>

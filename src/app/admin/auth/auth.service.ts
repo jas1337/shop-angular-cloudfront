@@ -34,7 +34,7 @@ export class AuthService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('order', 'api/auth/login');
+    const url = this.getUrl('auth', 'api/auth/login');
 
     return this.http
       .post<{

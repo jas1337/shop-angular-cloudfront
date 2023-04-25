@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CheckoutService } from './checkout.service';
-import { ProductCheckout } from '../products/product.interface';
+import { Product, ProductCheckout } from '../products/product.interface';
 import { Observable } from 'rxjs';
 import { CartService } from './cart.service';
 import { map, shareReplay } from 'rxjs/operators';
@@ -82,12 +82,17 @@ export class CartComponent implements OnInit {
     this.cartEmpty$ = this.totalInCart$.pipe(map((count) => count > 0));
   }
 
-  add(id: string): void {
-    this.cartService.addItem(id);
+  mapToProduct(productCheckout: ProductCheckout): Product {
+    const { id, title, description, price, count } = productCheckout;
+    return { id, title, description, price, count };
   }
 
-  remove(id: string): void {
-    this.cartService.removeItem(id);
+  add(productCheckout: ProductCheckout): void {
+    this.cartService.addItem(this.mapToProduct(productCheckout));
+  }
+
+  remove(productCheckout: ProductCheckout): void {
+    this.cartService.removeItem(this.mapToProduct(productCheckout));
   }
 
   async createOrder() {
