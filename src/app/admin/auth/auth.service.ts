@@ -1,14 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
-import { EMPTY, flatMap, Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { ApiService } from '../../core/api.service';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { User } from './user.interface';
 
 @Injectable()
 export class AuthService extends ApiService {
-  user: User | undefined;
-
   get isAuthenticated() {
     return !!this.authToken;
   }
@@ -19,8 +16,6 @@ export class AuthService extends ApiService {
 
   constructor(injector: Injector, private readonly router: Router) {
     super(injector);
-
-    this.loadUserFromLocalStorage();
   }
 
   authenticateUser(data: {
@@ -46,10 +41,6 @@ export class AuthService extends ApiService {
             'authorization_token',
             `${data.token_type} ${data.access_token}`
           );
-          if (data.user_data) {
-            localStorage.setItem('user', JSON.stringify(data.user_data));
-            this.loadUserFromLocalStorage();
-          }
           this.router.navigate(['/']);
           return data;
         })
@@ -58,19 +49,6 @@ export class AuthService extends ApiService {
 
   logOut() {
     localStorage.removeItem('authorization_token');
-    localStorage.removeItem('user');
     this.router.navigate(['/']);
-  }
-
-  loadUserFromLocalStorage() {
-    const userData = localStorage.getItem('user');
-
-    if (userData) {
-      try {
-        this.user = JSON.parse(userData);
-      } catch (e: any) {
-        throw new Error(e);
-      }
-    }
   }
 }

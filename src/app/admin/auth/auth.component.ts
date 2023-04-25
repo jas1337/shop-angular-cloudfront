@@ -13,6 +13,7 @@ import {
 
 import { NotificationService } from '../../core/notification.service';
 import { AuthService } from './auth.service';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private readonly fb: UntypedFormBuilder,
     private readonly notificationService: NotificationService,
-    private readonly loginService: AuthService
+    private readonly authService: AuthService,
+    private readonly cartService: CartService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -49,7 +51,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   logIn(): void {
     const { username, password } = this.loginForm.value;
 
-    this.loginService.authenticateUser({ username, password }).subscribe(() => {
+    this.authService.authenticateUser({ username, password }).subscribe(() => {
+      this.cartService.getCart();
       this.notificationService.showError(
         `You were logged in as: ${username}`,
         1000

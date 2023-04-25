@@ -1,21 +1,33 @@
 import { Injectable, Injector } from '@angular/core';
 import { EMPTY, Observable, of } from 'rxjs';
-import { Order, StatusHistory } from './order.interface';
-import { Product } from '../../products/product.interface';
+import { Order } from './order.interface';
 import { ApiService } from '../../core/api.service';
-import { ShippingInfo } from '../../cart/shipping-info.interface';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class OrdersService extends ApiService {
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private readonly authService: AuthService) {
     super(injector);
   }
 
   getOrders(): Observable<Order[]> {
-    return of([]);
+    if (!this.endpointEnabled('order')) {
+      console.warn(
+        'Endpoint "order" is disabled. To enable change your environment.ts config'
+      );
+      return EMPTY;
+    }
+
+    const url = this.getUrl('order', 'api/profile/orders');
+
+    return this.http.get<Order[]>(url, {
+      headers: {
+        Authorization: this.authService.authToken,
+      },
+    });
   }
 
-  createOrder(order: Order): Observable<Order> {
+  createOrder(order: { address: Object; comment: string }): Observable<Order> {
     if (!this.endpointEnabled('order')) {
       console.warn(
         'Endpoint "order" is disabled. To enable change your environment.ts config'
@@ -24,6 +36,10 @@ export class OrdersService extends ApiService {
     }
 
     const url = this.getUrl('order', 'api/profile/cart/checkout');
-    return this.http.post<Order>(url, order);
+    return this.http.post<Order>(url, order, {
+      headers: {
+        Authorization: this.authService.authToken,
+      },
+    });
   }
 }

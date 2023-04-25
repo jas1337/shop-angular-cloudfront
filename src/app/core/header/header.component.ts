@@ -13,22 +13,25 @@ export class HeaderComponent implements OnInit {
   totalInCart$!: Observable<number>;
 
   get isAuthenticated() {
-    return this.loginService.isAuthenticated;
+    return this.authService.isAuthenticated;
   }
 
   constructor(
     private readonly cartService: CartService,
-    private readonly loginService: AuthService,
+    private readonly authService: AuthService,
     private readonly notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.cartService.getCart();
     this.totalInCart$ = this.cartService.totalInCart$;
+    if (this.isAuthenticated) {
+      this.cartService.getCart();
+    }
   }
 
   logOut() {
-    this.loginService.logOut();
+    this.cartService.empty();
+    this.authService.logOut();
     this.notificationService.showError('You were logged out', 1000);
   }
 }
