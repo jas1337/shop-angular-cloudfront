@@ -14,7 +14,6 @@ export class AccessGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('AccessGuard');
     if (!this.authService.isAuthenticated) {
       this.router.navigate(['/admin/login']);
       this.notificationService.showError(

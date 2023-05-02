@@ -49,6 +49,6 @@ export class AuthService extends ApiService {
 
   logOut() {
     localStorage.removeItem('authorization_token');
-    this.router.navigate(['/']);
+    this.router.navigate(['/admin/login']);
   }
 }

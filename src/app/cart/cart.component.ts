@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 import { CartService } from './cart.service';
 import { map, shareReplay } from 'rxjs/operators';
 import { OrdersService } from '../admin/orders/orders.service';
+import { NotificationService } from '../core/notification.service';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-cart',
@@ -35,7 +37,8 @@ export class CartComponent implements OnInit {
     private readonly fb: UntypedFormBuilder,
     private readonly checkoutService: CheckoutService,
     private readonly orderService: OrdersService,
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
+    private readonly notificationService: NotificationService
   ) {}
 
   get fullName(): string {
@@ -50,6 +53,8 @@ export class CartComponent implements OnInit {
   get comment(): string {
     return this.shippingInfo.value.comment;
   }
+
+  @ViewChild('stepper') stepper: MatStepper;
 
   ngOnInit(): void {
     this.shippingInfo = this.fb.group({
@@ -106,6 +111,13 @@ export class CartComponent implements OnInit {
         },
         comment,
       })
-      .subscribe();
+      .subscribe((order) => {
+        this.cartService.getCart();
+        this.notificationService.showError(
+          `Order ${order.id} was created`,
+          2000
+        );
+        this.stepper.selectedIndex = 0;
+      });
   }
 }

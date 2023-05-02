@@ -3,6 +3,7 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { Order } from './order.interface';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../auth/auth.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class OrdersService extends ApiService {
@@ -18,13 +19,15 @@ export class OrdersService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('order', 'api/profile/orders');
+    const url = this.getUrl('order', 'api/profile/order');
 
-    return this.http.get<Order[]>(url, {
-      headers: {
-        Authorization: this.authService.authToken,
-      },
-    });
+    return this.http
+      .get<any>(url, {
+        headers: {
+          Authorization: this.authService.authToken,
+        },
+      })
+      .pipe(map(({ data }) => data.orders));
   }
 
   createOrder(order: { address: Object; comment: string }): Observable<Order> {
@@ -35,11 +38,13 @@ export class OrdersService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('order', 'api/profile/cart/checkout');
-    return this.http.post<Order>(url, order, {
-      headers: {
-        Authorization: this.authService.authToken,
-      },
-    });
+    const url = this.getUrl('order', 'api/profile/order');
+    return this.http
+      .post<any>(url, order, {
+        headers: {
+          Authorization: this.authService.authToken,
+        },
+      })
+      .pipe(map(({ data }) => data.order));
   }
 }
