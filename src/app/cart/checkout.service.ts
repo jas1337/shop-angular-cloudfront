@@ -16,17 +16,23 @@ export class CheckoutService {
 
   getProductsForCheckout(): Observable<ProductCheckout[]> {
     return this.cartService.cart$.pipe(
-      switchMap((cart) =>
-        this.productsService.getProductsForCheckout(Object.keys(cart)).pipe(
+      switchMap((cart) => {
+        const idsProducts = cart?.items.map((i) => i.product.id) || [];
+        return this.productsService.getProductsForCheckout(idsProducts).pipe(
           map((products) =>
-            products.map((product) => ({
-              ...product,
-              orderedCount: cart[product.id],
-              totalPrice: +(cart[product.id] * product.price).toFixed(2),
-            }))
+            products.map((product) => {
+              const count =
+                cart?.items.find((i) => i.product.id === product.id)?.count ||
+                0;
+              return {
+                ...product,
+                orderedCount: count,
+                totalPrice: +(count * product.price).toFixed(2),
+              };
+            })
           )
-        )
-      )
+        );
+      })
     );
   }
 }

@@ -7,22 +7,6 @@ import { switchMap } from 'rxjs/operators';
 export class ManageProductsService extends ApiService {
   constructor(injector: Injector) {
     super(injector);
-
-    this.authenticateUser();
-  }
-
-  authenticateUser() {
-    if (!this.endpointEnabled('auth')) {
-      console.warn(
-        'Endpoint "auth" is disabled. To enable change your environment.ts config'
-      );
-      return EMPTY;
-    }
-    const url = this.getUrl('auth', 'authenticate');
-
-    return this.http.get<string>(url).subscribe((token) => {
-      localStorage.setItem('authorization_token', token);
-    });
   }
 
   uploadProductsCSV(file: File): Observable<unknown> {
@@ -56,7 +40,7 @@ export class ManageProductsService extends ApiService {
 
     return this.http.get<string>(url, {
       headers: {
-        Authorization: `Basic ${authorizationToken}`,
+        Authorization: authorizationToken,
       },
       params: {
         name: fileName,

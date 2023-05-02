@@ -18,6 +18,7 @@ import { CONFIG_TOKEN } from './core/injection-tokens/config.token';
 import { environment } from '../environments/environment';
 import { ErrorPrintInterceptor } from './core/interceptors/error-print.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AdminModule } from './admin/admin.module';
 
 const interceptors: Provider[] = [
   {
@@ -43,6 +44,7 @@ const interceptors: Provider[] = [
     HttpClientModule,
     MatBadgeModule,
     MatSnackBarModule,
+    AdminModule,
   ],
   providers: [
     interceptors,

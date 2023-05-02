@@ -9,7 +9,7 @@ import { Order } from './order.interface';
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  readonly columns = ['from', 'count', 'address', 'status', 'action'];
+  readonly columns = ['from', 'count', 'address', 'status', 'total'];
 
   orders$!: Observable<Order[]>;
 

@@ -8,18 +8,18 @@ export const environment: Config = {
   production: false,
   apiEndpoints: {
     product: 'http://localhost:4000/dev',
-    order: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+    order: 'http://localhost:4002/dev',
     import: 'http://localhost:4001/dev',
     bff: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
-    cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+    cart: 'http://localhost:4002/dev',
     auth: 'http://localhost:4002/dev',
   },
   apiEndpointsEnabled: {
     product: true,
-    order: false,
+    order: true,
     import: true,
     bff: false,
-    cart: false,
+    cart: true,
     auth: true,
   },
 };

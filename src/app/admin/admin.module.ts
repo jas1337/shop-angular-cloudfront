@@ -14,12 +14,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { FilePickerModule } from '../shared/file-picker/file-picker.module';
 import { ManageProductsService } from './manage-products/manage-products.service';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
     OrdersComponent,
     ManageProductsComponent,
     EditProductComponent,
+    AuthComponent,
   ],
   imports: [
     AdminRoutingModule,
@@ -32,6 +35,6 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
-  providers: [OrdersService, ManageProductsService],
+  providers: [OrdersService, ManageProductsService, AuthService],
 })
 export class AdminModule {}
