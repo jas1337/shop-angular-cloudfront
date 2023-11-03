@@ -12,6 +12,7 @@ export const environment: Config = {
     import: 'http://localhost:4001/dev',
     bff: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
     cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+    auth: 'http://localhost:4002/dev',
   },
   apiEndpointsEnabled: {
     product: true,
@@ -19,6 +20,7 @@ export const environment: Config = {
     import: true,
     bff: false,
     cart: false,
+    auth: true,
   },
 };
 
